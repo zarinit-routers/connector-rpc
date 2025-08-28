@@ -1,0 +1,4 @@
+package connectorrpc
+
+func main() {
+}

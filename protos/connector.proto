@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option go_package = "github.com/zarinit-routers/router-server/connecter";
+
+message Client {
+    string id = 1;
+    string name = 2;
+    repeated string tags = 3;
+}
+
+message GetClientsRequest {
+}
+
+message GetClientsResponse {
+    repeated Client clients = 1;
+}
+
+service ClientsService {
+    rpc GetClient(GetClientsRequest) returns (GetClientsResponse) {}
+}
