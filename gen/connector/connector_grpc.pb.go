@@ -19,101 +19,177 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ClientsService_GetClient_FullMethodName = "/ClientsService/GetClient"
+	Nodes_NodesByGroup_FullMethodName = "/Nodes/NodesByGroup"
+	Nodes_AddTag_FullMethodName       = "/Nodes/AddTag"
+	Nodes_RemoveTag_FullMethodName    = "/Nodes/RemoveTag"
 )
 
-// ClientsServiceClient is the client API for ClientsService service.
+// NodesClient is the client API for Nodes service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type ClientsServiceClient interface {
-	GetClient(ctx context.Context, in *GetClientsRequest, opts ...grpc.CallOption) (*GetClientsResponse, error)
+type NodesClient interface {
+	NodesByGroup(ctx context.Context, in *NodesByGroupRequest, opts ...grpc.CallOption) (*NodesResponse, error)
+	AddTag(ctx context.Context, in *NodeRequest, opts ...grpc.CallOption) (*Node, error)
+	RemoveTag(ctx context.Context, in *NodeRequest, opts ...grpc.CallOption) (*Node, error)
 }
 
-type clientsServiceClient struct {
+type nodesClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewClientsServiceClient(cc grpc.ClientConnInterface) ClientsServiceClient {
-	return &clientsServiceClient{cc}
+func NewNodesClient(cc grpc.ClientConnInterface) NodesClient {
+	return &nodesClient{cc}
 }
 
-func (c *clientsServiceClient) GetClient(ctx context.Context, in *GetClientsRequest, opts ...grpc.CallOption) (*GetClientsResponse, error) {
+func (c *nodesClient) NodesByGroup(ctx context.Context, in *NodesByGroupRequest, opts ...grpc.CallOption) (*NodesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetClientsResponse)
-	err := c.cc.Invoke(ctx, ClientsService_GetClient_FullMethodName, in, out, cOpts...)
+	out := new(NodesResponse)
+	err := c.cc.Invoke(ctx, Nodes_NodesByGroup_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// ClientsServiceServer is the server API for ClientsService service.
-// All implementations must embed UnimplementedClientsServiceServer
-// for forward compatibility.
-type ClientsServiceServer interface {
-	GetClient(context.Context, *GetClientsRequest) (*GetClientsResponse, error)
-	mustEmbedUnimplementedClientsServiceServer()
+func (c *nodesClient) AddTag(ctx context.Context, in *NodeRequest, opts ...grpc.CallOption) (*Node, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Node)
+	err := c.cc.Invoke(ctx, Nodes_AddTag_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// UnimplementedClientsServiceServer must be embedded to have
+func (c *nodesClient) RemoveTag(ctx context.Context, in *NodeRequest, opts ...grpc.CallOption) (*Node, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Node)
+	err := c.cc.Invoke(ctx, Nodes_RemoveTag_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// NodesServer is the server API for Nodes service.
+// All implementations must embed UnimplementedNodesServer
+// for forward compatibility.
+type NodesServer interface {
+	NodesByGroup(context.Context, *NodesByGroupRequest) (*NodesResponse, error)
+	AddTag(context.Context, *NodeRequest) (*Node, error)
+	RemoveTag(context.Context, *NodeRequest) (*Node, error)
+	mustEmbedUnimplementedNodesServer()
+}
+
+// UnimplementedNodesServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedClientsServiceServer struct{}
+type UnimplementedNodesServer struct{}
 
-func (UnimplementedClientsServiceServer) GetClient(context.Context, *GetClientsRequest) (*GetClientsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetClient not implemented")
+func (UnimplementedNodesServer) NodesByGroup(context.Context, *NodesByGroupRequest) (*NodesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method NodesByGroup not implemented")
 }
-func (UnimplementedClientsServiceServer) mustEmbedUnimplementedClientsServiceServer() {}
-func (UnimplementedClientsServiceServer) testEmbeddedByValue()                        {}
+func (UnimplementedNodesServer) AddTag(context.Context, *NodeRequest) (*Node, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddTag not implemented")
+}
+func (UnimplementedNodesServer) RemoveTag(context.Context, *NodeRequest) (*Node, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RemoveTag not implemented")
+}
+func (UnimplementedNodesServer) mustEmbedUnimplementedNodesServer() {}
+func (UnimplementedNodesServer) testEmbeddedByValue()               {}
 
-// UnsafeClientsServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to ClientsServiceServer will
+// UnsafeNodesServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to NodesServer will
 // result in compilation errors.
-type UnsafeClientsServiceServer interface {
-	mustEmbedUnimplementedClientsServiceServer()
+type UnsafeNodesServer interface {
+	mustEmbedUnimplementedNodesServer()
 }
 
-func RegisterClientsServiceServer(s grpc.ServiceRegistrar, srv ClientsServiceServer) {
-	// If the following call pancis, it indicates UnimplementedClientsServiceServer was
+func RegisterNodesServer(s grpc.ServiceRegistrar, srv NodesServer) {
+	// If the following call pancis, it indicates UnimplementedNodesServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&ClientsService_ServiceDesc, srv)
+	s.RegisterService(&Nodes_ServiceDesc, srv)
 }
 
-func _ClientsService_GetClient_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetClientsRequest)
+func _Nodes_NodesByGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NodesByGroupRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ClientsServiceServer).GetClient(ctx, in)
+		return srv.(NodesServer).NodesByGroup(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ClientsService_GetClient_FullMethodName,
+		FullMethod: Nodes_NodesByGroup_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ClientsServiceServer).GetClient(ctx, req.(*GetClientsRequest))
+		return srv.(NodesServer).NodesByGroup(ctx, req.(*NodesByGroupRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// ClientsService_ServiceDesc is the grpc.ServiceDesc for ClientsService service.
+func _Nodes_AddTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NodeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NodesServer).AddTag(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Nodes_AddTag_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NodesServer).AddTag(ctx, req.(*NodeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Nodes_RemoveTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NodeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NodesServer).RemoveTag(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Nodes_RemoveTag_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NodesServer).RemoveTag(ctx, req.(*NodeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// Nodes_ServiceDesc is the grpc.ServiceDesc for Nodes service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var ClientsService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "ClientsService",
-	HandlerType: (*ClientsServiceServer)(nil),
+var Nodes_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "Nodes",
+	HandlerType: (*NodesServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetClient",
-			Handler:    _ClientsService_GetClient_Handler,
+			MethodName: "NodesByGroup",
+			Handler:    _Nodes_NodesByGroup_Handler,
+		},
+		{
+			MethodName: "AddTag",
+			Handler:    _Nodes_AddTag_Handler,
+		},
+		{
+			MethodName: "RemoveTag",
+			Handler:    _Nodes_RemoveTag_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

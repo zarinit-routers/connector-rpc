@@ -2,19 +2,25 @@ syntax = "proto3";
 
 option go_package = "github.com/zarinit-routers/router-server/connector";
 
-message Client {
+message Node {
     string id = 1;
     string name = 2;
     repeated string tags = 3;
 }
 
-message GetClientsRequest {
+message NodesByGroupRequest {
+    string groupId = 1;
 }
 
-message GetClientsResponse {
-    repeated Client clients = 1;
+message NodesResponse {
+    repeated Node clients = 1;
+}
+message NodeRequest {
+    string id = 1;
 }
 
-service ClientsService {
-    rpc GetClient(GetClientsRequest) returns (GetClientsResponse) {}
+service Nodes {
+    rpc NodesByGroup(NodesByGroupRequest) returns (NodesResponse) {}
+    rpc AddTag(NodeRequest) returns (Node) {}
+    rpc RemoveTag(NodeRequest) returns (Node) {}
 }

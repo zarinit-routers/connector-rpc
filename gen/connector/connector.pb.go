@@ -21,7 +21,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type Client struct {
+type Node struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
@@ -30,20 +30,20 @@ type Client struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *Client) Reset() {
-	*x = Client{}
+func (x *Node) Reset() {
+	*x = Node{}
 	mi := &file_connector_connector_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *Client) String() string {
+func (x *Node) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Client) ProtoMessage() {}
+func (*Node) ProtoMessage() {}
 
-func (x *Client) ProtoReflect() protoreflect.Message {
+func (x *Node) ProtoReflect() protoreflect.Message {
 	mi := &file_connector_connector_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -55,52 +55,53 @@ func (x *Client) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Client.ProtoReflect.Descriptor instead.
-func (*Client) Descriptor() ([]byte, []int) {
+// Deprecated: Use Node.ProtoReflect.Descriptor instead.
+func (*Node) Descriptor() ([]byte, []int) {
 	return file_connector_connector_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *Client) GetId() string {
+func (x *Node) GetId() string {
 	if x != nil {
 		return x.Id
 	}
 	return ""
 }
 
-func (x *Client) GetName() string {
+func (x *Node) GetName() string {
 	if x != nil {
 		return x.Name
 	}
 	return ""
 }
 
-func (x *Client) GetTags() []string {
+func (x *Node) GetTags() []string {
 	if x != nil {
 		return x.Tags
 	}
 	return nil
 }
 
-type GetClientsRequest struct {
+type NodesByGroupRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
+	GroupId       string                 `protobuf:"bytes,1,opt,name=groupId,proto3" json:"groupId,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetClientsRequest) Reset() {
-	*x = GetClientsRequest{}
+func (x *NodesByGroupRequest) Reset() {
+	*x = NodesByGroupRequest{}
 	mi := &file_connector_connector_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetClientsRequest) String() string {
+func (x *NodesByGroupRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetClientsRequest) ProtoMessage() {}
+func (*NodesByGroupRequest) ProtoMessage() {}
 
-func (x *GetClientsRequest) ProtoReflect() protoreflect.Message {
+func (x *NodesByGroupRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_connector_connector_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -112,32 +113,39 @@ func (x *GetClientsRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetClientsRequest.ProtoReflect.Descriptor instead.
-func (*GetClientsRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use NodesByGroupRequest.ProtoReflect.Descriptor instead.
+func (*NodesByGroupRequest) Descriptor() ([]byte, []int) {
 	return file_connector_connector_proto_rawDescGZIP(), []int{1}
 }
 
-type GetClientsResponse struct {
+func (x *NodesByGroupRequest) GetGroupId() string {
+	if x != nil {
+		return x.GroupId
+	}
+	return ""
+}
+
+type NodesResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Clients       []*Client              `protobuf:"bytes,1,rep,name=clients,proto3" json:"clients,omitempty"`
+	Clients       []*Node                `protobuf:"bytes,1,rep,name=clients,proto3" json:"clients,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetClientsResponse) Reset() {
-	*x = GetClientsResponse{}
+func (x *NodesResponse) Reset() {
+	*x = NodesResponse{}
 	mi := &file_connector_connector_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetClientsResponse) String() string {
+func (x *NodesResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetClientsResponse) ProtoMessage() {}
+func (*NodesResponse) ProtoMessage() {}
 
-func (x *GetClientsResponse) ProtoReflect() protoreflect.Message {
+func (x *NodesResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_connector_connector_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -149,32 +157,81 @@ func (x *GetClientsResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetClientsResponse.ProtoReflect.Descriptor instead.
-func (*GetClientsResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use NodesResponse.ProtoReflect.Descriptor instead.
+func (*NodesResponse) Descriptor() ([]byte, []int) {
 	return file_connector_connector_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *GetClientsResponse) GetClients() []*Client {
+func (x *NodesResponse) GetClients() []*Node {
 	if x != nil {
 		return x.Clients
 	}
 	return nil
 }
 
+type NodeRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *NodeRequest) Reset() {
+	*x = NodeRequest{}
+	mi := &file_connector_connector_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *NodeRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*NodeRequest) ProtoMessage() {}
+
+func (x *NodeRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_connector_connector_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use NodeRequest.ProtoReflect.Descriptor instead.
+func (*NodeRequest) Descriptor() ([]byte, []int) {
+	return file_connector_connector_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *NodeRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
 var File_connector_connector_proto protoreflect.FileDescriptor
 
 const file_connector_connector_proto_rawDesc = "" +
 	"\n" +
-	"\x19connector/connector.proto\"@\n" +
-	"\x06Client\x12\x0e\n" +
+	"\x19connector/connector.proto\">\n" +
+	"\x04Node\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x12\n" +
-	"\x04tags\x18\x03 \x03(\tR\x04tags\"\x13\n" +
-	"\x11GetClientsRequest\"7\n" +
-	"\x12GetClientsResponse\x12!\n" +
-	"\aclients\x18\x01 \x03(\v2\a.ClientR\aclients2H\n" +
-	"\x0eClientsService\x126\n" +
-	"\tGetClient\x12\x12.GetClientsRequest\x1a\x13.GetClientsResponse\"\x00B4Z2github.com/zarinit-routers/router-server/connectorb\x06proto3"
+	"\x04tags\x18\x03 \x03(\tR\x04tags\"/\n" +
+	"\x13NodesByGroupRequest\x12\x18\n" +
+	"\agroupId\x18\x01 \x01(\tR\agroupId\"0\n" +
+	"\rNodesResponse\x12\x1f\n" +
+	"\aclients\x18\x01 \x03(\v2\x05.NodeR\aclients\"\x1d\n" +
+	"\vNodeRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id2\x84\x01\n" +
+	"\x05Nodes\x126\n" +
+	"\fNodesByGroup\x12\x14.NodesByGroupRequest\x1a\x0e.NodesResponse\"\x00\x12\x1f\n" +
+	"\x06AddTag\x12\f.NodeRequest\x1a\x05.Node\"\x00\x12\"\n" +
+	"\tRemoveTag\x12\f.NodeRequest\x1a\x05.Node\"\x00B4Z2github.com/zarinit-routers/router-server/connectorb\x06proto3"
 
 var (
 	file_connector_connector_proto_rawDescOnce sync.Once
@@ -188,18 +245,23 @@ func file_connector_connector_proto_rawDescGZIP() []byte {
 	return file_connector_connector_proto_rawDescData
 }
 
-var file_connector_connector_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_connector_connector_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_connector_connector_proto_goTypes = []any{
-	(*Client)(nil),             // 0: Client
-	(*GetClientsRequest)(nil),  // 1: GetClientsRequest
-	(*GetClientsResponse)(nil), // 2: GetClientsResponse
+	(*Node)(nil),                // 0: Node
+	(*NodesByGroupRequest)(nil), // 1: NodesByGroupRequest
+	(*NodesResponse)(nil),       // 2: NodesResponse
+	(*NodeRequest)(nil),         // 3: NodeRequest
 }
 var file_connector_connector_proto_depIdxs = []int32{
-	0, // 0: GetClientsResponse.clients:type_name -> Client
-	1, // 1: ClientsService.GetClient:input_type -> GetClientsRequest
-	2, // 2: ClientsService.GetClient:output_type -> GetClientsResponse
-	2, // [2:3] is the sub-list for method output_type
-	1, // [1:2] is the sub-list for method input_type
+	0, // 0: NodesResponse.clients:type_name -> Node
+	1, // 1: Nodes.NodesByGroup:input_type -> NodesByGroupRequest
+	3, // 2: Nodes.AddTag:input_type -> NodeRequest
+	3, // 3: Nodes.RemoveTag:input_type -> NodeRequest
+	2, // 4: Nodes.NodesByGroup:output_type -> NodesResponse
+	0, // 5: Nodes.AddTag:output_type -> Node
+	0, // 6: Nodes.RemoveTag:output_type -> Node
+	4, // [4:7] is the sub-list for method output_type
+	1, // [1:4] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
 	1, // [1:1] is the sub-list for extension extendee
 	0, // [0:1] is the sub-list for field type_name
@@ -216,7 +278,7 @@ func file_connector_connector_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_connector_connector_proto_rawDesc), len(file_connector_connector_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   3,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
