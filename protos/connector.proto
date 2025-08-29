@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "github.com/zarinit-routers/router-server/connecter";
+option go_package = "github.com/zarinit-routers/router-server/connector";
 
 message Client {
     string id = 1;

@@ -4,7 +4,7 @@
 // 	protoc        v6.31.1
 // source: protos/connector.proto
 
-package connecter
+package connector
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -174,7 +174,7 @@ const file_protos_connector_proto_rawDesc = "" +
 	"\x12GetClientsResponse\x12!\n" +
 	"\aclients\x18\x01 \x03(\v2\a.ClientR\aclients2H\n" +
 	"\x0eClientsService\x126\n" +
-	"\tGetClient\x12\x12.GetClientsRequest\x1a\x13.GetClientsResponse\"\x00B4Z2github.com/zarinit-routers/router-server/connecterb\x06proto3"
+	"\tGetClient\x12\x12.GetClientsRequest\x1a\x13.GetClientsResponse\"\x00B4Z2github.com/zarinit-routers/router-server/connectorb\x06proto3"
 
 var (
 	file_protos_connector_proto_rawDescOnce sync.Once

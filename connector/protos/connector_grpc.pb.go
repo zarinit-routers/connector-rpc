@@ -4,7 +4,7 @@
 // - protoc             v6.31.1
 // source: protos/connector.proto
 
-package connecter
+package connector
 
 import (
 	context "context"
