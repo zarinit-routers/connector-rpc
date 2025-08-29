@@ -169,27 +169,28 @@ func (x *NodesResponse) GetClients() []*Node {
 	return nil
 }
 
-type NodeRequest struct {
+type TagRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	ModeId        string                 `protobuf:"bytes,1,opt,name=modeId,proto3" json:"modeId,omitempty"`
+	Tag           string                 `protobuf:"bytes,2,opt,name=tag,proto3" json:"tag,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *NodeRequest) Reset() {
-	*x = NodeRequest{}
+func (x *TagRequest) Reset() {
+	*x = TagRequest{}
 	mi := &file_connector_connector_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *NodeRequest) String() string {
+func (x *TagRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*NodeRequest) ProtoMessage() {}
+func (*TagRequest) ProtoMessage() {}
 
-func (x *NodeRequest) ProtoReflect() protoreflect.Message {
+func (x *TagRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_connector_connector_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -201,14 +202,21 @@ func (x *NodeRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use NodeRequest.ProtoReflect.Descriptor instead.
-func (*NodeRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use TagRequest.ProtoReflect.Descriptor instead.
+func (*TagRequest) Descriptor() ([]byte, []int) {
 	return file_connector_connector_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *NodeRequest) GetId() string {
+func (x *TagRequest) GetModeId() string {
 	if x != nil {
-		return x.Id
+		return x.ModeId
+	}
+	return ""
+}
+
+func (x *TagRequest) GetTag() string {
+	if x != nil {
+		return x.Tag
 	}
 	return ""
 }
@@ -225,13 +233,15 @@ const file_connector_connector_proto_rawDesc = "" +
 	"\x13NodesByGroupRequest\x12\x18\n" +
 	"\agroupId\x18\x01 \x01(\tR\agroupId\"0\n" +
 	"\rNodesResponse\x12\x1f\n" +
-	"\aclients\x18\x01 \x03(\v2\x05.NodeR\aclients\"\x1d\n" +
-	"\vNodeRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id2\x84\x01\n" +
+	"\aclients\x18\x01 \x03(\v2\x05.NodeR\aclients\"6\n" +
+	"\n" +
+	"TagRequest\x12\x16\n" +
+	"\x06modeId\x18\x01 \x01(\tR\x06modeId\x12\x10\n" +
+	"\x03tag\x18\x02 \x01(\tR\x03tag2\x82\x01\n" +
 	"\x05Nodes\x126\n" +
-	"\fNodesByGroup\x12\x14.NodesByGroupRequest\x1a\x0e.NodesResponse\"\x00\x12\x1f\n" +
-	"\x06AddTag\x12\f.NodeRequest\x1a\x05.Node\"\x00\x12\"\n" +
-	"\tRemoveTag\x12\f.NodeRequest\x1a\x05.Node\"\x00B4Z2github.com/zarinit-routers/router-server/connectorb\x06proto3"
+	"\fNodesByGroup\x12\x14.NodesByGroupRequest\x1a\x0e.NodesResponse\"\x00\x12\x1e\n" +
+	"\x06AddTag\x12\v.TagRequest\x1a\x05.Node\"\x00\x12!\n" +
+	"\tRemoveTag\x12\v.TagRequest\x1a\x05.Node\"\x00B4Z2github.com/zarinit-routers/router-server/connectorb\x06proto3"
 
 var (
 	file_connector_connector_proto_rawDescOnce sync.Once
@@ -250,13 +260,13 @@ var file_connector_connector_proto_goTypes = []any{
 	(*Node)(nil),                // 0: Node
 	(*NodesByGroupRequest)(nil), // 1: NodesByGroupRequest
 	(*NodesResponse)(nil),       // 2: NodesResponse
-	(*NodeRequest)(nil),         // 3: NodeRequest
+	(*TagRequest)(nil),          // 3: TagRequest
 }
 var file_connector_connector_proto_depIdxs = []int32{
 	0, // 0: NodesResponse.clients:type_name -> Node
 	1, // 1: Nodes.NodesByGroup:input_type -> NodesByGroupRequest
-	3, // 2: Nodes.AddTag:input_type -> NodeRequest
-	3, // 3: Nodes.RemoveTag:input_type -> NodeRequest
+	3, // 2: Nodes.AddTag:input_type -> TagRequest
+	3, // 3: Nodes.RemoveTag:input_type -> TagRequest
 	2, // 4: Nodes.NodesByGroup:output_type -> NodesResponse
 	0, // 5: Nodes.AddTag:output_type -> Node
 	0, // 6: Nodes.RemoveTag:output_type -> Node

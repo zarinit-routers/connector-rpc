@@ -29,8 +29,8 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type NodesClient interface {
 	NodesByGroup(ctx context.Context, in *NodesByGroupRequest, opts ...grpc.CallOption) (*NodesResponse, error)
-	AddTag(ctx context.Context, in *NodeRequest, opts ...grpc.CallOption) (*Node, error)
-	RemoveTag(ctx context.Context, in *NodeRequest, opts ...grpc.CallOption) (*Node, error)
+	AddTag(ctx context.Context, in *TagRequest, opts ...grpc.CallOption) (*Node, error)
+	RemoveTag(ctx context.Context, in *TagRequest, opts ...grpc.CallOption) (*Node, error)
 }
 
 type nodesClient struct {
@@ -51,7 +51,7 @@ func (c *nodesClient) NodesByGroup(ctx context.Context, in *NodesByGroupRequest,
 	return out, nil
 }
 
-func (c *nodesClient) AddTag(ctx context.Context, in *NodeRequest, opts ...grpc.CallOption) (*Node, error) {
+func (c *nodesClient) AddTag(ctx context.Context, in *TagRequest, opts ...grpc.CallOption) (*Node, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Node)
 	err := c.cc.Invoke(ctx, Nodes_AddTag_FullMethodName, in, out, cOpts...)
@@ -61,7 +61,7 @@ func (c *nodesClient) AddTag(ctx context.Context, in *NodeRequest, opts ...grpc.
 	return out, nil
 }
 
-func (c *nodesClient) RemoveTag(ctx context.Context, in *NodeRequest, opts ...grpc.CallOption) (*Node, error) {
+func (c *nodesClient) RemoveTag(ctx context.Context, in *TagRequest, opts ...grpc.CallOption) (*Node, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Node)
 	err := c.cc.Invoke(ctx, Nodes_RemoveTag_FullMethodName, in, out, cOpts...)
@@ -76,8 +76,8 @@ func (c *nodesClient) RemoveTag(ctx context.Context, in *NodeRequest, opts ...gr
 // for forward compatibility.
 type NodesServer interface {
 	NodesByGroup(context.Context, *NodesByGroupRequest) (*NodesResponse, error)
-	AddTag(context.Context, *NodeRequest) (*Node, error)
-	RemoveTag(context.Context, *NodeRequest) (*Node, error)
+	AddTag(context.Context, *TagRequest) (*Node, error)
+	RemoveTag(context.Context, *TagRequest) (*Node, error)
 	mustEmbedUnimplementedNodesServer()
 }
 
@@ -91,10 +91,10 @@ type UnimplementedNodesServer struct{}
 func (UnimplementedNodesServer) NodesByGroup(context.Context, *NodesByGroupRequest) (*NodesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method NodesByGroup not implemented")
 }
-func (UnimplementedNodesServer) AddTag(context.Context, *NodeRequest) (*Node, error) {
+func (UnimplementedNodesServer) AddTag(context.Context, *TagRequest) (*Node, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddTag not implemented")
 }
-func (UnimplementedNodesServer) RemoveTag(context.Context, *NodeRequest) (*Node, error) {
+func (UnimplementedNodesServer) RemoveTag(context.Context, *TagRequest) (*Node, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RemoveTag not implemented")
 }
 func (UnimplementedNodesServer) mustEmbedUnimplementedNodesServer() {}
@@ -137,7 +137,7 @@ func _Nodes_NodesByGroup_Handler(srv interface{}, ctx context.Context, dec func(
 }
 
 func _Nodes_AddTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(NodeRequest)
+	in := new(TagRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -149,13 +149,13 @@ func _Nodes_AddTag_Handler(srv interface{}, ctx context.Context, dec func(interf
 		FullMethod: Nodes_AddTag_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NodesServer).AddTag(ctx, req.(*NodeRequest))
+		return srv.(NodesServer).AddTag(ctx, req.(*TagRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Nodes_RemoveTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(NodeRequest)
+	in := new(TagRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -167,7 +167,7 @@ func _Nodes_RemoveTag_Handler(srv interface{}, ctx context.Context, dec func(int
 		FullMethod: Nodes_RemoveTag_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NodesServer).RemoveTag(ctx, req.(*NodeRequest))
+		return srv.(NodesServer).RemoveTag(ctx, req.(*TagRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
