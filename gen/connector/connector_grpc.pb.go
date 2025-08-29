@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v6.31.1
-// source: protos/connector.proto
+// source: connector/connector.proto
 
 package connector
 
@@ -117,5 +117,5 @@ var ClientsService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "protos/connector.proto",
+	Metadata: "connector/connector.proto",
 }
