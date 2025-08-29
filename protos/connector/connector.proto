@@ -15,12 +15,13 @@ message NodesByGroupRequest {
 message NodesResponse {
     repeated Node clients = 1;
 }
-message NodeRequest {
-    string id = 1;
+message TagRequest {
+    string modeId = 1;
+    string tag = 2;
 }
 
 service Nodes {
     rpc NodesByGroup(NodesByGroupRequest) returns (NodesResponse) {}
-    rpc AddTag(NodeRequest) returns (Node) {}
-    rpc RemoveTag(NodeRequest) returns (Node) {}
+    rpc AddTag(TagRequest) returns (Node) {}
+    rpc RemoveTag(TagRequest) returns (Node) {}
 }
